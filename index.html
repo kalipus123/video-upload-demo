@@ -3,42 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <title>Upload & View Video</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 40px; }
-    video { margin-top: 20px; width: 90%; max-width: 600px; display: none; }
+    body { 
+      font-family: sans-serif; 
+      text-align: center; 
+      padding: 40px; 
+      background: #fafafa;
+    }
+    #videoPlayer {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 600px;
+      display: none;
+      background: #000;
+    }
     #thumbnail {
       margin-top: 20px;
-      width: 90%;
+      width: 100%;
       max-width: 600px;
-      height: 300px;
-      background-color: #ddd;
+      height: 220px;
+      background: #e0e0e0;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #555;
+      color: #444;
       font-size: 1.2em;
       border: 2px dashed #aaa;
       cursor: pointer;
       user-select: none;
+      transition: background 0.2s;
+    }
+    #thumbnail:active, #thumbnail:focus {
+      background: #d0d0d0;
+    }
+    #videoUpload {
+      display: none;
     }
     @media (max-width: 600px) {
+      body { padding: 10px; }
       #thumbnail {
-        font-size: 1.5em;
-        height: 200px;
+        font-size: 1.1em;
+        height: 140px;
+      }
+      #videoPlayer {
+        max-width: 100vw;
       }
     }
   </style>
 </head>
 <body>
   <h1>Upload Your Video</h1>
-  <input type="file" id="videoUpload" accept="video/*" style="display:none;">
-  <label for="videoUpload" id="thumbnail">Upload a video by clicking on the button to surprise your brother!</label>
-  <video id="videoPlayer" controls autoplay loop></video>
+  <input type="file" id="videoUpload" accept="video/*">
+  <label for="videoUpload" id="thumbnail">
+    Upload a video by clicking on the button to surprise your brother!
+  </label>
+  <video id="videoPlayer" controls autoplay loop playsinline></video>
   <script>
     const uploadInput = document.getElementById('videoUpload');
     const videoPlayer = document.getElementById('videoPlayer');
     const thumbnail = document.getElementById('thumbnail');
 
+    // On page load, check if a video is saved
     const savedVideo = localStorage.getItem('uploadedVideo');
     if (savedVideo) {
       videoPlayer.src = savedVideo;
