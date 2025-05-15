@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload & View Video</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    video {
+      margin-top: 20px;
+      width: 90%;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload Your Video</h1>
+  <input type="file" id="videoUpload" accept="video/*">
+  <br>
+  <video id="videoPlayer" controls autoplay loop></video>
+
+  <script>
+    const uploadInput = document.getElementById('videoUpload');
+    const videoPlayer = document.getElementById('videoPlayer');
+
+    // Load stored video if available
+    const savedVideo = localStorage.getItem('uploadedVideo');
+    if (savedVideo) {
+      videoPlayer.src = savedVideo;
+    }
+
+    uploadInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const videoDataUrl = event.target.result;
+        videoPlayer.src = videoDataUrl;
+        localStorage.setItem('uploadedVideo', videoDataUrl);
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
