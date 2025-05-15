@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Upload & View Video</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { 
-      font-family: sans-serif; 
-      text-align: center; 
-      padding: 40px; 
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
       background: #fafafa;
     }
     #videoPlayer {
@@ -34,14 +34,17 @@
       user-select: none;
       transition: background 0.2s;
     }
-    #thumbnail:active, #thumbnail:focus {
+    #thumbnail:active,
+    #thumbnail:focus {
       background: #d0d0d0;
     }
     #videoUpload {
       display: none;
     }
     @media (max-width: 600px) {
-      body { padding: 10px; }
+      body {
+        padding: 10px;
+      }
       #thumbnail {
         font-size: 1.1em;
         height: 140px;
@@ -54,33 +57,40 @@
 </head>
 <body>
   <h1>Upload Your Video</h1>
-  <input type="file" id="videoUpload" accept="video/*">
+  <input type="file" id="videoUpload" accept="video/*" />
   <label for="videoUpload" id="thumbnail">
     Upload a video by clicking on the button to surprise your brother!
   </label>
-  <video id="videoPlayer" controls autoplay loop playsinline></video>
-  <script>
-    const uploadInput = document.getElementById('videoUpload');
-    const videoPlayer = document.getElementById('videoPlayer');
-    const thumbnail = document.getElementById('thumbnail');
+  <video
+    id="videoPlayer"
+    controls
+    autoplay
+    loop
+    playsinline
+  ></video>
 
-    // On page load, check if a video is saved
-    const savedVideo = localStorage.getItem('uploadedVideo');
+  <script>
+    const uploadInput = document.getElementById("videoUpload");
+    const videoPlayer = document.getElementById("videoPlayer");
+    const thumbnail = document.getElementById("thumbnail");
+
+    // On page load, check if a video is saved in localStorage
+    const savedVideo = localStorage.getItem("uploadedVideo");
     if (savedVideo) {
       videoPlayer.src = savedVideo;
-      videoPlayer.style.display = 'block';
-      thumbnail.style.display = 'none';
+      videoPlayer.style.display = "block";
+      thumbnail.style.display = "none";
     }
 
-    uploadInput.addEventListener('change', e => {
+    uploadInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = ev => {
+      reader.onload = (ev) => {
         videoPlayer.src = ev.target.result;
-        localStorage.setItem('uploadedVideo', ev.target.result);
-        videoPlayer.style.display = 'block';
-        thumbnail.style.display = 'none';
+        localStorage.setItem("uploadedVideo", ev.target.result);
+        videoPlayer.style.display = "block";
+        thumbnail.style.display = "none";
       };
       reader.readAsDataURL(file);
     });
